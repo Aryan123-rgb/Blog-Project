@@ -1,18 +1,18 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Test2 from "./Test2";
-import Test3 from "./Test3";
 import Authentication from "./Pages/Authentication";
+import Navbar from "./components/Navbar";
+import BlogPage from "./Pages/BlogPage";
 
 function App() {
   return (
-    <>
-      <Test3 />
+    <div style={{backgroundColor:"#0f0f3e",minHeight:"100vh"}}>
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Authentication />}></Route>
-        <Route path="/1" element={<Test2 />}></Route>
+        <Route path="/" element={<BlogPage />}></Route>
+        <Route path="/auth" element={<Authentication />}></Route>
       </Routes>
-    </>
+    </div>
   );
 }
 

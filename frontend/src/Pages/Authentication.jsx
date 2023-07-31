@@ -23,23 +23,15 @@ function Authentication() {
         display="flex"
         justifyContent="center"
         p={3}
-        bg="white"
+        bg="bg"
         w="100%"
         m="40px 0 15px 0"
-        borderRadius="lg"
-        borderWidth="1px"
       >
-        <Text fontSize={"4xl"}>
+        <Text fontSize={"4xl"} color={"#f2f2fe"}>
           {selectedTab === 0 ? "Welcome back" : "Get Started"}
         </Text>
       </Box>
-      <Box
-        bg={"whatsapp.100"}
-        w={"100%"}
-        p={4}
-        borderRadius={"lg"}
-        borderWidth={"1px"}
-      >
+      <Box bg={"bg"} w={"100%"} p={4}>
         <Tabs
           isFitted
           variant={"soft-rounded"}
@@ -47,8 +39,12 @@ function Authentication() {
           onChange={handleTabChange}
         >
           <TabList mb={"1em"}>
-            <Tab>Login</Tab>
-            <Tab>Signup</Tab>
+            <Tab color={"#f2f2fe"} _selected={{ color: '#f2f2fe', bg: 'primary-variant' }}>
+              Login
+            </Tab>
+            <Tab color={"#f2f2fe"} _selected={{ color: '#f2f2fe', bg: 'primary-variant' }}>
+              Signup
+            </Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
