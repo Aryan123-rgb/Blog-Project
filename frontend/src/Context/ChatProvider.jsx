@@ -4,6 +4,7 @@ export const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState();
+  const [blogs,setBlogs] = useState([]);
 
   const getLoggedInUserInfo = async () => {
     const response = await fetch("http://localhost:4000/user", {
@@ -23,7 +24,9 @@ export const UserProvider = ({ children }) => {
       value={{
         loggedInUser,
         setLoggedInUser,
-        getLoggedInUserInfo
+        getLoggedInUserInfo,
+        blogs,
+        setBlogs
       }}
     >
       {children}

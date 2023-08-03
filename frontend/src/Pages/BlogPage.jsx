@@ -14,7 +14,6 @@ import {
   Avatar,
   Grid,
 } from "@chakra-ui/react";
-import ImageSrc from "../images/avatar1.jpg";
 import Blog from "../components/Blog";
 
 function BlogPage() {
