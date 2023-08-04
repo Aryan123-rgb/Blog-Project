@@ -14,8 +14,7 @@ const handleCreateBlog = async (req, res) => {
     const info = jwt.verify(token, secret);
     loggedUserId = info?.id;
   }
-  console.log(req.body);
-  console.log(title,summary,description);
+
   try {
     const blogDoc = await Blog.create({
       title: title,
@@ -35,4 +34,18 @@ const handleCreateBlog = async (req, res) => {
   }
 };
 
-module.exports = { handleCreateBlog };
+const handleGetAllBlogs = async(req,res) => {
+  try {
+    const allBlogs = await Blog.find({});
+    const blogInfo = await Blog.populate(allBlogs, {
+      path: "author",
+      select: "name email pic isAdmin",
+    });
+    res.json(allBlogs);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+}
+
+module.exports = { handleCreateBlog , handleGetAllBlogs};

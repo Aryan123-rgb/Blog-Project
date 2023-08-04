@@ -8,22 +8,45 @@ import {
   Button,
   FormControl,
   FormLabel,
+  useToast,
 } from "@chakra-ui/react";
 import { UserContext } from "../Context/ChatProvider";
+import { useNavigate } from "react-router-dom";
 
 function CreateBlog() {
   const [title, setTitle] = useState();
   const [summary, setSummary] = useState();
   const [description, setDescription] = useState();
   const [imageFile, setImageFile] = useState(null);
-  const { blogs, setBlogs } = useContext(UserContext);
+  const { blogs, setBlogs, loggedInUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  if(loggedInUser === undefined || loggedInUser === null || !loggedInUser){
+    navigate('/');
+    toast({
+      title: "Please log in to create new blogs",
+      description: "",
+      status: "warning",
+      duration: 5000,
+      isClosable: true,
+      position: "top",
+    });
+  }
 
   const handleSubmit = async () => {
     if (!title || !summary || !description) {
       console.log(title);
       console.log(summary);
       console.log(description);
-      alert("All fields are required");
+      toast({
+        title: "Please fill all the fields",
+        description: "",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
       return;
     }
     const formData = new FormData();
@@ -37,8 +60,9 @@ function CreateBlog() {
       body: formData,
       credentials:'include'
     });
-    const data = await response.json()
-    console.log(data);
+    const data = await response.json();
+    setBlogs([data,...blogs]);
+    console.log(blogs);
   };
 
   return (
@@ -58,7 +82,6 @@ function CreateBlog() {
             onChange={(e) => setTitle(e.target.value)}
           />
         </FormControl>
-
         <FormControl>
           <FormLabel color={"#f2f2fe"}>Summary</FormLabel>
           <Textarea
