@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Card,
   CardHeader,
@@ -15,8 +15,11 @@ import {
   Grid,
 } from "@chakra-ui/react";
 import Blog from "../components/Blog";
+import { UserContext } from "../Context/ChatProvider";
 
 function BlogPage() {
+  const { blogs } = useContext(UserContext);
+
   const blogHeading = "The Latest Technology Trends in 2023";
   const authorName = "John Doe";
   const authorAvatarSrc = "https://via.placeholder.com/50";
@@ -66,24 +69,23 @@ function BlogPage() {
         direction="row"
         align="center"
         justify="center"
-        minHeight="100vh"
-        bg={'bg'}
-        p={8}
-        w='100%'
+        minHeight="80vh"
+        bg={"bg"}
+        // p={8}
+        w="100%"
       >
-        <Grid
-          templateColumns="repeat(3, 1fr)"
-          gap={12} // Spacing between blogs
-          // maxW="1200px" // Set maximum width for the container
-          width="80%" // Set the container to take 100% width of its parent
-        >
-          <Blog />
-          <Blog />
-          <Blog />
-          <Blog />
-          <Blog />
-          <Blog />
-        </Grid>
+        {blogs.length > 0 ? (
+          <Grid
+            templateColumns="repeat(3, 1fr)"
+            gap={12} // Spacing between blogs
+            // maxW="1200px" // Set maximum width for the container
+            width="80%" // Set the container to take 100% width of its parent
+          >
+            {blogs.map((blog) => (
+              <Blog key={blog._id} blog={blog} />
+            ))}
+          </Grid>
+        ) : null}
       </Flex>
     </>
   );

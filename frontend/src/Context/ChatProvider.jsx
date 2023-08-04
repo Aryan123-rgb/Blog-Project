@@ -22,15 +22,6 @@ export const UserProvider = ({ children }) => {
     });
     const data = await response.json();
     setBlogs(data);
-    console.log(blogs);
-
-    // fetch("http://localhost:4000/blog/getAllBlogs", {
-    //   method: "GET",
-    //   credentials: "include",
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data));
-    // console.log(blogs);
   };
 
   useEffect(() => {
@@ -46,6 +37,7 @@ export const UserProvider = ({ children }) => {
         getLoggedInUserInfo,
         blogs,
         setBlogs,
+        getAllBlogs
       }}
     >
       {children}
