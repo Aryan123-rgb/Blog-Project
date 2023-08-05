@@ -22,8 +22,7 @@ function CreateBlog() {
   const navigate = useNavigate();
   const toast = useToast();
 
-  if(loggedInUser === undefined || loggedInUser === null || !loggedInUser){
-    navigate('/');
+  if (loggedInUser === undefined) {
     toast({
       title: "Please log in to create new blogs",
       description: "",
@@ -32,6 +31,8 @@ function CreateBlog() {
       isClosable: true,
       position: "top",
     });
+    navigate("/auth");
+    return;
   }
 
   const handleSubmit = async () => {
@@ -50,21 +51,28 @@ function CreateBlog() {
       return;
     }
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('summary', summary);
-    formData.append('description', description);
-    formData.append('imageFile', imageFile);
-    
-    const response = await fetch('http://localhost:4000/blog/createBlog', {
-      method: 'POST',
-      body: formData,
-      credentials:'include'
-    });
-    const data = await response.json();
-    setBlogs([data,...blogs]);
-    console.log(blogs);
-  };
+    formData.append("title", title);
+    formData.append("summary", summary);
+    formData.append("description", description);
+    formData.append("imageFile", imageFile);
 
+    try {
+      const response = await fetch("http://localhost:4000/blog/createBlog", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+      const data = await response.json();
+      setBlogs([data, ...blogs]);
+      setTitle("");
+      setSummary("");
+      setDescription("");
+      setImageFile("");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Box p={4} w={"90%"} mx={"auto"}>
       <Box bg={"bg"} p={4}>

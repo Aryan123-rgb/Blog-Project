@@ -35,6 +35,9 @@ function Navbar() {
       padding="1rem"
       bg="primary"
       color="white"
+      position='sticky'
+      top={0}
+      zIndex={123}
     >
       {/* Logo */}
       <Box>
