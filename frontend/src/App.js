@@ -6,6 +6,7 @@ import BlogPage from "./Pages/BlogPage";
 import { UserProvider } from "./Context/ChatProvider";
 import CreateBlog from "./Pages/CreateBlog";
 import SingleBlogPage from "./Pages/SingleBlogPage";
+import EditBlog from "./components/EditBlog";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
           <Route path="/" element={<BlogPage />}></Route>
           <Route path="/auth" element={<Authentication />}></Route>
           <Route path="/create" element={<CreateBlog />}></Route>
-          <Route path="/blog/:id" element={<SingleBlogPage/>}></Route>
+          <Route path="/blog/:id" element={<SingleBlogPage />}></Route>
+          <Route path="/edit/:id" element={<EditBlog />}></Route>
         </Routes>
       </UserProvider>
     </div>

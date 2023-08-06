@@ -90,9 +90,23 @@ const handleGetFeaturedBlog = async(req,res) => {
   }
 }
 
+const handleDeleteBlog = async(req,res) => {
+  try {
+    const {id} = req.body;
+    await Blog.findByIdAndDelete(id);
+    res.json('ok');
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+}
+
+
+
 module.exports = {
   handleCreateBlog,
   handleGetAllBlogs,
   handleToggleFeatureBlog,
-  handleGetFeaturedBlog
+  handleGetFeaturedBlog,
+  handleDeleteBlog
 };

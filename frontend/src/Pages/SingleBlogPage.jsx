@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Box,
   Image,
@@ -14,10 +14,25 @@ import { UserContext } from "../Context/ChatProvider";
 
 function SingleBlogPage() {
   const { id } = useParams();
-  const { blogs, loggedInUser } = useContext(UserContext);
+  const { blogs, loggedInUser , getAllBlogs} = useContext(UserContext);
   const blog = blogs.find((blog) => blog._id === id);
-  console.log(blog);
-  console.log(loggedInUser);
+  const navigate = useNavigate();
+
+  const handleDeleteBlog = async() => {
+    const response = await fetch("http://localhost:4000/blog/delete", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id : id }),
+      credentials: "include",
+    });
+    const data = await response.json();
+    console.log(data);
+    getAllBlogs();
+    navigate('/');
+  }
+
   return (
     <Box maxWidth="800px" mx="auto" mt={8} p={4}>
       <Image
@@ -37,18 +52,30 @@ function SingleBlogPage() {
             {new Date(blog?.createdAt).toLocaleString()}
           </Text>
         </Box>
-          {loggedInUser &&
-            (loggedInUser?.isAdmin ||
-              loggedInUser?._id === blog?.author?._id) && (
-              <Stack direction="row" spacing={4} ml={'auto'} mr={'2rem'}>
-                <Button variant="solid" color={'#f2f2fe'} bg={'primary'} _hover={{bg:'primary-variant'}}>
-                  Edit
-                </Button>
-                <Button variant="solid" color={'#f2f2fe'} bg={'red'} _hover={{opacity:'0.8'}}>
-                  Delete
-                </Button>
-              </Stack>
-            )}
+        {loggedInUser &&
+          (loggedInUser?.isAdmin ||
+            loggedInUser?._id === blog?.author?._id) && (
+            <Stack direction="row" spacing={4} ml={"auto"} mr={"2rem"}>
+              <Button
+                variant="solid"
+                color={"#f2f2fe"}
+                bg={"primary"}
+                _hover={{ bg: "primary-variant" }}
+                onClick={()=>navigate(`/edit/${blog._id}`)}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="solid"
+                color={"#f2f2fe"}
+                bg={"red"}
+                _hover={{ opacity: "0.8" }}
+                onClick={handleDeleteBlog}
+              >
+                Delete
+              </Button>
+            </Stack>
+          )}
       </Flex>
       <Text
         mt={8}
