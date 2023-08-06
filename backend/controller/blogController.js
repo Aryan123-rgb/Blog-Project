@@ -34,9 +34,9 @@ const handleCreateBlog = async (req, res) => {
   }
 };
 
-const handleGetAllBlogs = async(req,res) => {
+const handleGetAllBlogs = async (req, res) => {
   try {
-    const allBlogs = await Blog.find({});
+    const allBlogs = await Blog.find({}).sort({ createdAt: -1 });
     const blogInfo = await Blog.populate(allBlogs, {
       path: "author",
       select: "name email pic isAdmin",
@@ -46,6 +46,53 @@ const handleGetAllBlogs = async(req,res) => {
     console.log(error);
     res.status(400).json(error);
   }
+};
+
+const handleToggleFeatureBlog = async (req, res) => {
+  const { idToBeFeatured } = req.body;
+  try {
+    await Blog.findOneAndUpdate(
+      { isFeatured: true },
+      { $set: { isFeatured: false } }
+    );
+
+    const blogToBeFeatured = await Blog.findByIdAndUpdate(
+      idToBeFeatured,
+      { $set: { isFeatured: true } },
+      { new: true }
+    );
+
+    if (!blogToBeFeatured) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
+    const blogInfo = await Blog.populate(blogToBeFeatured, {
+      path: "author",
+      select: "name email pic isAdmin",
+    });
+    res.json(blogToBeFeatured)
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+
+const handleGetFeaturedBlog = async(req,res) => {
+  try {
+    const featuredBlog = await Blog.findOne({isFeatured:true});
+    const blogInfo = await Blog.populate(featuredBlog, {
+      path: "author",
+      select: "name email pic isAdmin",
+    });
+    res.json(featuredBlog);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
 }
 
-module.exports = { handleCreateBlog , handleGetAllBlogs};
+module.exports = {
+  handleCreateBlog,
+  handleGetAllBlogs,
+  handleToggleFeatureBlog,
+  handleGetFeaturedBlog
+};

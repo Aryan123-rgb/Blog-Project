@@ -18,53 +18,83 @@ import Blog from "../components/Blog";
 import { UserContext } from "../Context/ChatProvider";
 
 function BlogPage() {
-  const { blogs } = useContext(UserContext);
+  const { blogs, featuredBlog } = useContext(UserContext);
 
   const blogHeading = "The Latest Technology Trends in 2023";
   const authorName = "John Doe";
   const authorAvatarSrc = "https://via.placeholder.com/50";
   const brief =
     "Discover the hottest technology trends in 2023. From AI and blockchain to quantum computing, we explore the breakthroughs reshaping industries. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, iusto maxime. Est aperiam ab temporibus eum quam fuga, sapiente nam facere laborum sint id debitis. Hic fugiat fuga commodi atque? Est aperiam ab temporibus eum quam fuga, sapiente nam facere laborum sint id debitis. Hic fugiat fuga commodi atque?";
+
+  console.log(featuredBlog);
+
+  const getTimeDifference = (date) => {
+    const now = new Date();
+    const createdAt = new Date(date);
+    const timeDifference = now - createdAt;
+
+    if (timeDifference < 60 * 1000) {
+      const secondsAgo = Math.floor(timeDifference / 1000);
+      return `${secondsAgo} ${secondsAgo === 1 ? "second" : "seconds"} ago`;
+    } else if (timeDifference < 60 * 60 * 1000) {
+      const minutesAgo = Math.floor(timeDifference / (60 * 1000));
+      return `${minutesAgo} ${minutesAgo === 1 ? "minute" : "minutes"} ago`;
+    } else if (timeDifference < 24 * 60 * 60 * 1000) {
+      const hoursAgo = Math.floor(timeDifference / (60 * 60 * 1000));
+      return `${hoursAgo} ${hoursAgo === 1 ? "hour" : "hours"} ago`;
+    } else {
+      const daysAgo = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
+      return `${daysAgo} ${daysAgo === 1 ? "day" : "days"} ago`;
+    }
+  };
+
   return (
     <>
-      <Card
-        direction={{ base: "column", sm: "row" }}
-        overflow="hidden"
-        bg={"bg"}
-        mx="auto"
-        w="75%"
-        my="3rem"
-        color={"#f2f2fe"}
-      >
-        <Image
-          objectFit="cover"
-          maxW={{ base: "100%", sm: "400px" }}
-          src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-          alt="Caffe Latte"
-        />
-        <Stack>
-          <CardBody>
-            <Heading size="2xl">The perfect latte</Heading>
-            <Text pt="1" color={"gray-200"}>
-              {brief}
-            </Text>
-          </CardBody>
-          <CardFooter>
-            <Flex spacing="4">
-              <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                <Avatar
-                  name="Segun Adebayo"
-                  src="https://bit.ly/sage-adebayo"
-                />
-                <Box>
-                  <Text size="sm">Segun Adebayo</Text>
-                  <Text color={"gray-200"}>Creator, Chakra UI</Text>
-                </Box>
+      {featuredBlog ? (
+        <Card
+          direction={{ base: "column", sm: "row" }}
+          overflow="hidden"
+          bg={"bg"}
+          mx="auto"
+          w="75%"
+          my="3rem"
+          color={"#f2f2fe"}
+        >
+          <Image
+            objectFit="cover"
+            maxW={{ base: "100%", sm: "400px" }}
+            src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+            alt="Caffe Latte"
+          />
+          <Stack>
+            <CardBody>
+              <Heading size="2xl"> {featuredBlog?.title} </Heading>
+              <Text pt="1" color={"gray-200"}>
+                {featuredBlog?.summary}
+              </Text>
+            </CardBody>
+            <CardFooter>
+              <Flex spacing="4">
+                <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                  <Avatar
+                    name="Segun Adebayo"
+                    src="https://bit.ly/sage-adebayo"
+                  />
+                  <Box>
+                    <Text size="sm"> {featuredBlog?.author?.name} </Text>
+                    <Text color={"gray-200"}>
+                      {" "}
+                      {featuredBlog?.author?.isAdmin ? "Admin" : "Author"},{" "}
+                      {getTimeDifference(featuredBlog?.createdAt)}{" "}
+                    </Text>
+                  </Box>
+                </Flex>
               </Flex>
-            </Flex>
-          </CardFooter>
-        </Stack>
-      </Card>
+            </CardFooter>
+          </Stack>
+        </Card>
+      ) : null}
+
       <Flex
         direction="row"
         align="center"

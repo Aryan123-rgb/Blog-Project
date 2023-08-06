@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import BlogPage from "./Pages/BlogPage";
 import { UserProvider } from "./Context/ChatProvider";
 import CreateBlog from "./Pages/CreateBlog";
+import SingleBlogPage from "./Pages/SingleBlogPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<BlogPage />}></Route>
           <Route path="/auth" element={<Authentication />}></Route>
           <Route path="/create" element={<CreateBlog />}></Route>
+          <Route path="/blog/:id" element={<SingleBlogPage/>}></Route>
         </Routes>
       </UserProvider>
     </div>

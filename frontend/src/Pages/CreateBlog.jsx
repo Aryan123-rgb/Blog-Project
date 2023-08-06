@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 function CreateBlog() {
   const [title, setTitle] = useState();
   const [summary, setSummary] = useState();
-  const [description, setDescription] = useState();
+  const [description, setDescription] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const { blogs, setBlogs, loggedInUser } = useContext(UserContext);
   const navigate = useNavigate();
@@ -50,10 +50,11 @@ function CreateBlog() {
       });
       return;
     }
+    const formattedDescription = description.replace(/\n/g, '<br>');
     const formData = new FormData();
     formData.append("title", title);
     formData.append("summary", summary);
-    formData.append("description", description);
+    formData.append("description", formattedDescription);
     formData.append("imageFile", imageFile);
 
     try {
@@ -111,6 +112,7 @@ function CreateBlog() {
             h={"40vh"}
             resize={"none"}
             value={description}
+            whiteSpace={'pre-wrap'}
             onChange={(e) => setDescription(e.target.value)}
           />
         </FormControl>

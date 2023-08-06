@@ -15,10 +15,13 @@ import {
 } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { UserContext } from "../Context/ChatProvider";
+import { useNavigate } from "react-router-dom";
 
 function Blog({ blog }) {
-  const { loggedInUser } = useContext(UserContext);
-  console.log(loggedInUser);
+  const { loggedInUser, featuredBlog, setFeaturedBlog } =
+    useContext(UserContext);
+  const navigate = useNavigate();
+
   const getTimeDifference = (date) => {
     const now = new Date();
     const createdAt = new Date(date);
@@ -38,6 +41,24 @@ function Blog({ blog }) {
       return `${daysAgo} ${daysAgo === 1 ? "day" : "days"} ago`;
     }
   };
+
+  const handleToggleFeaturedBlog = async () => {
+    console.log(blog);
+    try {
+      const response = await fetch("http://localhost:4000/blog/togglefeature", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ idToBeFeatured: blog._id }),
+        credentials: "include",
+      });
+      const data = await response.json();
+      setFeaturedBlog(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Card maxW="sm" bg={"bg"} color={"#f2f2fe"} borderWidth={1}>
       <CardBody>
@@ -47,7 +68,16 @@ function Blog({ blog }) {
           borderRadius="lg"
         />
         <Stack mt="6" spacing="3">
-          <Heading size="xl"> {blog?.title} </Heading>
+          <Heading
+            size="xl"
+            onClick={() => navigate(`/blog/${blog._id}`)}
+            cursor={"pointer"}
+            _hover={{ color: "blue" }}
+            w={"fit-content"}
+          >
+            {" "}
+            {blog?.title}{" "}
+          </Heading>
           <Text color={"gray-200"}>{blog?.summary}</Text>
         </Stack>
       </CardBody>
@@ -55,7 +85,7 @@ function Blog({ blog }) {
         <Flex spacing="4">
           <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
             <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
-            <Box display='flex' justifyContent='space-between'>
+            <Box display="flex" justifyContent="space-between">
               <Box>
                 <Text size="sm"> {blog?.author?.name} </Text>
                 <Text color={"gray-200"}>
@@ -65,7 +95,12 @@ function Blog({ blog }) {
               </Box>
             </Box>
             {loggedInUser?.isAdmin ? (
-              <Button marginLeft="0" variant="solid" colorScheme="blue">
+              <Button
+                marginLeft="0"
+                variant="solid"
+                colorScheme="blue"
+                onClick={handleToggleFeaturedBlog}
+              >
                 Feature
               </Button>
             ) : null}

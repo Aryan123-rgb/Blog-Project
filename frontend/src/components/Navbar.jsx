@@ -15,17 +15,17 @@ import { UserContext } from "../Context/ChatProvider";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { loggedInUser , setLoggedInUser} = useContext(UserContext);
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     const response = await fetch("http://localhost:4000/user/logout", {
       method: "POST",
       credentials: "include",
     });
     setLoggedInUser();
-    navigate('/auth')
-  }
+    navigate("/auth");
+  };
 
   return (
     <Flex
@@ -35,7 +35,7 @@ function Navbar() {
       padding="1rem"
       bg="primary"
       color="white"
-      position='sticky'
+      position="sticky"
       top={0}
       zIndex={123}
     >
@@ -58,28 +58,32 @@ function Navbar() {
 
       {/* Navigation Links */}
       <Flex align="center" mr="10rem">
-        <Box mr="5rem">
-          <Link
-            to={"/create"}
-            style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: "1.45rem",
-            }}
-          >
-            Create
-          </Link>
-        </Box>
-        <Box mr="5rem">
-          <Link
-            to={"/saved"}
-            style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: "1.45rem",
-            }}
-          >
-            Saved
-          </Link>
-        </Box>
+        {loggedInUser ? (
+          <>
+            <Box mr="5rem">
+              <Link
+                to={"/create"}
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: "1.45rem",
+                }}
+              >
+                Create
+              </Link>
+            </Box>
+            <Box mr="5rem">
+              <Link
+                to={"/saved"}
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: "1.45rem",
+                }}
+              >
+                Saved
+              </Link>
+            </Box>
+          </>
+        ) : null}
         {loggedInUser ? (
           <Menu>
             <MenuButton
@@ -104,7 +108,8 @@ function Navbar() {
                 _hover={{ bg: "red" }}
                 p={"0.8rem"}
               >
-                {loggedInUser?.name} ({loggedInUser.isAdmin ? 'admin' : 'author'})
+                {loggedInUser?.name} (
+                {loggedInUser.isAdmin ? "admin" : "author"})
               </MenuItem>
               <MenuItem
                 color={"#f2f2fe"}

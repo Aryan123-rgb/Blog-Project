@@ -5,6 +5,7 @@ export const UserContext = createContext({});
 export const UserProvider = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState();
   const [blogs, setBlogs] = useState([]);
+  const [featuredBlog,setFeaturedBlog] = useState();
 
   const getLoggedInUserInfo = async () => {
     const response = await fetch("http://localhost:4000/user", {
@@ -24,9 +25,19 @@ export const UserProvider = ({ children }) => {
     setBlogs(data);
   };
 
+  const getFeaturedBlog = async() => {
+    const response = await fetch("http://localhost:4000/blog/getFeaturedBlog", {
+      method: "GET",
+      credentials: "include",
+    });
+    const data = await response.json();
+    setFeaturedBlog(data);
+  }
+
   useEffect(() => {
     getLoggedInUserInfo();
     getAllBlogs();
+    getFeaturedBlog();
   }, []);
 
   return (
@@ -37,7 +48,10 @@ export const UserProvider = ({ children }) => {
         getLoggedInUserInfo,
         blogs,
         setBlogs,
-        getAllBlogs
+        getAllBlogs,
+        featuredBlog,
+        setFeaturedBlog,
+        getFeaturedBlog
       }}
     >
       {children}
