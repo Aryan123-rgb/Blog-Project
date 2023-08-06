@@ -7,6 +7,7 @@ import {
   InputRightElement,
   VStack,
   useToast,
+  Box,Text
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../Context/ChatProvider";
@@ -14,12 +15,49 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [show, setShow] = useState(false);
-  const { loggedInUser, setLoggedInUser, getLoggedInUserInfo } = useContext(UserContext);
+  const { loggedInUser, setLoggedInUser, getLoggedInUserInfo } =
+    useContext(UserContext);
   const toast = useToast();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  function showToastError() {
+    return toast({
+      render: () => (
+        <Box p={4} bg="red" color="#f2f2fe" borderRadius="md" boxShadow="md">
+          <Text fontWeight="bold" fontSize="lg">
+            Invalid credentials
+          </Text>
+        </Box>
+      ),
+      duration: 3000,
+      isClosable: true,
+      position: "top",
+    });
+  }
+
+  function showToastSuccess() {
+    return toast({
+      render: () => (
+        <Box
+          p={4}
+          bg="green"
+          color="#f2f2fe"
+          borderRadius="md"
+          boxShadow="md"
+        >
+          <Text fontWeight="bold" fontSize="lg">
+            Log in successfull
+          </Text>
+        </Box>
+      ),
+      duration: 3000,
+      isClosable: true,
+      position: "top",
+    });
+  }
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -43,18 +81,16 @@ function Login() {
         credentials: "include",
       });
       const data = await response.json();
-      setLoggedInUser(data);
-      navigate('/');
-      setEmail('');
-      setPassword('');
-      toast({
-        title:"Log in successfull",
-        description:'',
-        status:"success",
-        duration:3000,
-        isClosable:true,
-        position:'top',
-      })
+      if (response.ok) {
+        setLoggedInUser(data);
+        navigate("/");
+        setEmail("");
+        setPassword("");
+        showToastSuccess();
+      }
+      else{
+        showToastError();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -104,7 +140,13 @@ function Login() {
       >
         Login
       </Button>
-      <Button variant={"solid"} bg={"red"} width={"100%"} color={"#f2f2fe"}>
+      <Button
+        variant={"solid"}
+        bg={"red"}
+        _hover={{ opacity: "0.9" }}
+        width={"100%"}
+        color={"#f2f2fe"}
+      >
         Guest User
       </Button>
     </VStack>

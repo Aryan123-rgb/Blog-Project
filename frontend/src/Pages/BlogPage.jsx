@@ -16,9 +16,11 @@ import {
 } from "@chakra-ui/react";
 import Blog from "../components/Blog";
 import { UserContext } from "../Context/ChatProvider";
+import { useNavigate } from "react-router-dom";
 
 function BlogPage() {
   const { blogs, featuredBlog } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const blogHeading = "The Latest Technology Trends in 2023";
   const authorName = "John Doe";
@@ -68,8 +70,16 @@ function BlogPage() {
           />
           <Stack>
             <CardBody>
-              <Heading size="2xl"> {featuredBlog?.title} </Heading>
-              <Text pt="1" color={"gray-200"}>
+              <Heading
+                size="2xl"
+                _hover={{ color: "blue" }}
+                cursor={"pointer"}
+                onClick={() => navigate(`/blog/${featuredBlog?._id}`)}
+              >
+                {" "}
+                {featuredBlog?.title}{" "}
+              </Heading>
+              <Text pt="1" color={"#dfe4ea"}>
                 {featuredBlog?.summary}
               </Text>
             </CardBody>
@@ -82,7 +92,7 @@ function BlogPage() {
                   />
                   <Box>
                     <Text size="sm"> {featuredBlog?.author?.name} </Text>
-                    <Text color={"gray-200"}>
+                    <Text color={"#dfe4ea"}>
                       {" "}
                       {featuredBlog?.author?.isAdmin ? "Admin" : "Author"},{" "}
                       {getTimeDifference(featuredBlog?.createdAt)}{" "}

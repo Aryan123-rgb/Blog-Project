@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../Context/ChatProvider";
 import {
   Box,
@@ -15,8 +15,9 @@ import {
 
 function EditBlog() {
   const { id } = useParams();
-  const { blogs, loggedInUser } = useContext(UserContext);
+  const { blogs, getAllBlogs } = useContext(UserContext);
   const blog = blogs.find((blog) => blog._id === id);
+  const navigate = useNavigate();
 
   function htmlToPlainTextWithLineBreaks(html) {
     const plainText = html.replace(/<br\s*[/]?>/gi, "\n");
@@ -28,20 +29,24 @@ function EditBlog() {
   const [description, setDescription] = useState(
     htmlToPlainTextWithLineBreaks(blog?.description)
   );
+  const [imageFile, setImageFile] = useState(null);
 
   const handleUpdateBlog = async () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("summary", summary);
     formData.append("description", description);
+    formData.append("imageFile", imageFile);
     try {
-      const response = await fetch("http://localhost:4000/blog/edit", {
+      const response = await fetch(`http://localhost:4000/blog/edit/${blog?._id}`, {
         method: "PUT",
         body: formData,
         credentials: "include",
       });
       const data = await response.json();
       console.log(data);
+      getAllBlogs();
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
@@ -92,7 +97,12 @@ function EditBlog() {
 
         <FormControl>
           <FormLabel color={"#f2f2fe"}>Image</FormLabel>
-          <input type="file" mb={4} style={{ color: "#f2f2fe" }} />
+          <input
+            type="file"
+            mb={4}
+            style={{ color: "#f2f2fe" }}
+            onChange={(e) => setImageFile(e.target.files[0])}
+          />
         </FormControl>
       </Flex>
       <Button

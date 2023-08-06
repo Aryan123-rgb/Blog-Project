@@ -4,7 +4,8 @@ const {
   handleGetAllBlogs,
   handleToggleFeatureBlog,
   handleGetFeaturedBlog,
-  handleDeleteBlog
+  handleDeleteBlog,
+  handleEditBlog
 } = require("../controller/blogController");
 const router = express.Router();
 const multer = require("multer");
@@ -15,6 +16,6 @@ router.get("/getAllBlogs", handleGetAllBlogs);
 router.post("/togglefeature", handleToggleFeatureBlog);
 router.get('/getFeaturedBlog',handleGetFeaturedBlog);
 router.post('/delete',handleDeleteBlog);
-
+router.put('/edit/:id',upload.single('imageFile'),handleEditBlog);
 
 module.exports = router;

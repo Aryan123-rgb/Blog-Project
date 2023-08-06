@@ -78,7 +78,7 @@ function Blog({ blog }) {
             {" "}
             {blog?.title}{" "}
           </Heading>
-          <Text color={"gray-200"}>{blog?.summary}</Text>
+          <Text color={"#dfe4ea"}>{blog?.summary}</Text>
         </Stack>
       </CardBody>
       <CardFooter>
@@ -98,7 +98,8 @@ function Blog({ blog }) {
               <Button
                 marginLeft="0"
                 variant="solid"
-                colorScheme="blue"
+                backgroundColor={'primary'}
+                _hover={{backgroundColor:"primary-variant"}}
                 onClick={handleToggleFeaturedBlog}
               >
                 Feature

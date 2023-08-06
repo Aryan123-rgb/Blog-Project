@@ -7,6 +7,7 @@ import {
   InputRightElement,
   VStack,
   useToast,
+  Box,Text
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../Context/ChatProvider";
@@ -15,15 +16,60 @@ import { useNavigate } from "react-router-dom";
 function Signup() {
   const [show, setShow] = useState(false);
   const toast = useToast();
-  const { loggedInUser, setLoggedInUser, getLoggedInUserInfo } = useContext(UserContext)
+  const { loggedInUser, setLoggedInUser, getLoggedInUserInfo } =
+    useContext(UserContext);
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [profilePic,setProfilePic] = useState();
+  const [profilePic, setProfilePic] = useState();
 
-  const handleSignup = async() => {
+  function showToastError() {
+    return toast({
+      render: () => (
+        <Box
+          p={4}
+          bg="red"
+          color="#f2f2fe"
+          borderRadius="md"
+          boxShadow="md"
+        >
+          <Text fontWeight="bold" fontSize="lg">
+            Email already exists
+          </Text>
+          <Text>
+            Try logging in or sign up with a different email
+          </Text>
+        </Box>
+      ),
+      duration: 3000,
+      isClosable: true,
+      position: "top",
+    });
+  }
+  function showToastSuccess() {
+    return toast({
+      render: () => (
+        <Box
+          p={4}
+          bg="green"
+          color="#f2f2fe"
+          borderRadius="md"
+          boxShadow="md"
+        >
+          <Text fontWeight="bold" fontSize="lg">
+            Sign up successfull
+          </Text>
+        </Box>
+      ),
+      duration: 3000,
+      isClosable: true,
+      position: "top",
+    });
+  }
+
+  const handleSignup = async () => {
     if (!name || !email || !password) {
       toast({
         title: "Please fill all the fields",
@@ -36,33 +82,31 @@ function Signup() {
       return;
     }
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('profilePic', profilePic);
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("profilePic", profilePic);
     try {
-      const response = await fetch('http://localhost:4000/user/signup', {
-        method: 'POST',
+      const response = await fetch("http://localhost:4000/user/signup", {
+        method: "POST",
         body: formData,
-        credentials:'include'
+        credentials: "include",
       });
-      const data = await response.json()
-      setLoggedInUser(data);
-      navigate('/');
-      setName('');
-      setEmail('');
-      setPassword('');
-      setProfilePic('');
-      toast({
-        title:"Sign up successfull",
-        description:'',
-        status:"success",
-        duration:3000,
-        isClosable:true,
-        position:'top',
-      })
+      if (response.ok) {
+        const data = await response.json();
+        setLoggedInUser(data);
+        navigate("/");
+        setName("");
+        setEmail("");
+        setPassword("");
+        setProfilePic("");
+        showToastSuccess();
+      }
+      else{
+        showToastError();
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
 
@@ -116,7 +160,7 @@ function Signup() {
         <FormLabel color={"#f2f2fe"}>Upload your Picture</FormLabel>
         <input
           type="file"
-          style={{color:"#f2f2fe"}}
+          style={{ color: "#f2f2fe" }}
           onChange={(e) => setProfilePic(e.target.files[0])}
         />
       </FormControl>

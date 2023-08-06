@@ -46,8 +46,8 @@ function SingleBlogPage() {
       <Flex mt={6} align="center">
         <Avatar name={blog?.author?.name} src={blog?.author?.avatarUrl} />
         <Box ml={3}>
-          <Text color={"gray-200"}>{blog?.author?.name}</Text>
-          <Text color="gray.600" fontSize="sm">
+          <Text color={"#f1f2f6"}>{blog?.author?.name}</Text>
+          <Text color="#f1f2f6" fontSize="sm">
             {blog?.author?.isAdmin ? "Admin" : "Author"},{" "}
             {new Date(blog?.createdAt).toLocaleString()}
           </Text>
@@ -79,7 +79,7 @@ function SingleBlogPage() {
       </Flex>
       <Text
         mt={8}
-        color={"gray-300"}
+        color={"#dfe4ea"}
         dangerouslySetInnerHTML={{ __html: blog?.description }}
       ></Text>
     </Box>
