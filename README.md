@@ -6,26 +6,26 @@ BlogNest is a full-stack blogging platform that allows users to create, read, up
 
 ### Homepage
 
-![Homepage](/images/homepage.png)
+![Homepage](./images/homepage.png)
 *Description: This screenshot shows the homepage of BlogNest, displaying featured blog posts and other posts.*
 
 ### Signup-Page
 
-![Login](/images/Login.png)
-*Description: This screenshot shows the login page. New user can log in as a guest user to try all the functionality of project.*
+![Login](./images/Login.png)
+*Description: This screenshot shows the login page. A new user can log in as a guest user to try all the functionality of the project.*
 
 
-![UpdatedHomePage](/images/UpdatedHomePage.png)
-*Description: This screenshot shows the homepage of BlogNest, displaying featured blog posts and other posts after user signs up.*
+![UpdatedHomePage](./images/UpdatedHomePage.png)
+*Description: This screenshot shows the homepage of BlogNest, displaying featured blog posts and other posts after a user signs up.*
 
 ### Blog Creation
 
-![Blog Creation](/images/CreateBlog.png)
+![Blog Creation](./images/CreateBlog.png)
 *Description: This screenshot shows the blog creation page, where users can create new blog posts.*
 
 ### Blog Details
 
-![Blog Details](/images/blog-details.png)
+![Blog Details](./images/blog-details.png)
 *Description: This screenshot shows the details page of a blog, displaying the full content of the blog post.*
 
 
