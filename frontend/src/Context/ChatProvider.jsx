@@ -36,13 +36,15 @@ export const UserProvider = ({ children }) => {
   };
 
   const getBookMarkedBlogs = async () => {
-    const response = await fetch("http://localhost:4000/bookmark/", {
+    const response = await fetch("http://localhost:4000/bookmark/getAllBookmarkBlogs", {
       method: "GET",
       credentials: "include",
     });
     const data = await response.json();
-    const updatedBookmarkedBlogs = data.map((bookmark) => bookmark?.blog);
-    setBookMarkedBlogs(updatedBookmarkedBlogs);
+    if(response.ok){
+      const updatedBookmarkedBlogs = data?.map((bookmark) => bookmark?.blog);
+      setBookMarkedBlogs(updatedBookmarkedBlogs);
+    }
   };
 
   useEffect(() => {

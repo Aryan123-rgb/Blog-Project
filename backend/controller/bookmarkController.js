@@ -78,7 +78,7 @@ const handleGetAllBookmarkedBlogs = async (req, res) => {
       res.status(400).json(error);
     }
   } else {
-    res.status(400).json();
+    res.status(400).json('ok');
   }
 };
 

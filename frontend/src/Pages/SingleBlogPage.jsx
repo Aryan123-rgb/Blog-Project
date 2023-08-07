@@ -32,7 +32,6 @@ function SingleBlogPage() {
     getAllBlogs();
     navigate('/');
   }
-
   return (
     <Box maxWidth="800px" mx="auto" mt={8} p={4}>
       <Image
