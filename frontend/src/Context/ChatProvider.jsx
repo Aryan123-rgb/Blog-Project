@@ -5,7 +5,8 @@ export const UserContext = createContext({});
 export const UserProvider = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState();
   const [blogs, setBlogs] = useState([]);
-  const [featuredBlog,setFeaturedBlog] = useState();
+  const [featuredBlog, setFeaturedBlog] = useState();
+  const [bookmarkedBlogs, setBookMarkedBlogs] = useState([]);
 
   const getLoggedInUserInfo = async () => {
     const response = await fetch("http://localhost:4000/user", {
@@ -25,19 +26,30 @@ export const UserProvider = ({ children }) => {
     setBlogs(data);
   };
 
-  const getFeaturedBlog = async() => {
+  const getFeaturedBlog = async () => {
     const response = await fetch("http://localhost:4000/blog/getFeaturedBlog", {
       method: "GET",
       credentials: "include",
     });
     const data = await response.json();
     setFeaturedBlog(data);
-  }
+  };
+
+  const getBookMarkedBlogs = async () => {
+    const response = await fetch("http://localhost:4000/bookmark/", {
+      method: "GET",
+      credentials: "include",
+    });
+    const data = await response.json();
+    const updatedBookmarkedBlogs = data.map((bookmark) => bookmark?.blog);
+    setBookMarkedBlogs(updatedBookmarkedBlogs);
+  };
 
   useEffect(() => {
     getLoggedInUserInfo();
     getAllBlogs();
     getFeaturedBlog();
+    getBookMarkedBlogs();
   }, []);
 
   return (
@@ -51,7 +63,10 @@ export const UserProvider = ({ children }) => {
         getAllBlogs,
         featuredBlog,
         setFeaturedBlog,
-        getFeaturedBlog
+        getFeaturedBlog,
+        bookmarkedBlogs,
+        setBookMarkedBlogs,
+        getBookMarkedBlogs,
       }}
     >
       {children}

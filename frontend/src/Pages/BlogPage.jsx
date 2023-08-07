@@ -28,8 +28,6 @@ function BlogPage() {
   const brief =
     "Discover the hottest technology trends in 2023. From AI and blockchain to quantum computing, we explore the breakthroughs reshaping industries. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, iusto maxime. Est aperiam ab temporibus eum quam fuga, sapiente nam facere laborum sint id debitis. Hic fugiat fuga commodi atque? Est aperiam ab temporibus eum quam fuga, sapiente nam facere laborum sint id debitis. Hic fugiat fuga commodi atque?";
 
-  console.log(featuredBlog);
-
   const getTimeDifference = (date) => {
     const now = new Date();
     const createdAt = new Date(date);

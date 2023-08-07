@@ -5,7 +5,7 @@ const cors = require("cors");
 const { connectToMongoDB } = require("./connect");
 const userRoutes = require("./routes/userRoutes");
 const blogRoutes = require("./routes/blogRoutes");
-const messageRoutes = require("./routes/messageRoutes");
+const bookmarkRoutes = require("./routes/bookmarkRoutes");
 const cookieParser = require("cookie-parser");
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json());
@@ -18,6 +18,6 @@ connectToMongoDB("mongodb://localhost:27017/blog-nest").then(() =>
 
 app.use("/user", userRoutes);
 app.use("/blog", blogRoutes);
-app.use("/message", messageRoutes);
+app.use("/bookmark", bookmarkRoutes);
 
 app.listen(port,()=>console.log('Server started on ' + port))

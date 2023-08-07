@@ -13,14 +13,16 @@ import {
   Avatar,
   Box,
 } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../Context/ChatProvider";
 import { useNavigate } from "react-router-dom";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 
 function Blog({ blog }) {
-  const { loggedInUser, featuredBlog, setFeaturedBlog } =
+  const { loggedInUser, featuredBlog, setFeaturedBlog,getBookMarkedBlogs } =
     useContext(UserContext);
   const navigate = useNavigate();
+  const [isBlogBookmarked, setIsBlogBookmarked] = useState(false);
 
   const getTimeDifference = (date) => {
     const now = new Date();
@@ -43,14 +45,16 @@ function Blog({ blog }) {
   };
 
   const handleToggleFeaturedBlog = async () => {
-    console.log(blog);
     try {
       const response = await fetch("http://localhost:4000/blog/togglefeature", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ idToBeFeatured: blog._id }),
+        body: JSON.stringify({
+          idToBeFeatured: blog?._id,
+          loggedInUserId: loggedInUser?._id,
+        }),
         credentials: "include",
       });
       const data = await response.json();
@@ -59,8 +63,66 @@ function Blog({ blog }) {
       console.log(error);
     }
   };
+
+  const handleBookMarkBlog = async () => {
+    if (isBlogBookmarked === false) {
+      try {
+        const response = await fetch(
+          "http://localhost:4000/bookmark/addBookmark",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              idToBeBookmarked: blog?._id,
+              loggedInUserId: loggedInUser?._id,
+            }),
+            credentials: "include",
+          }
+        );
+        const data = await response.json();
+        getBookMarkedBlogs();
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const response = await fetch(
+          "http://localhost:4000/bookmark/removeBookmark",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              idToBeRemoved: blog?._id,
+              loggedInUserId: loggedInUser?._id,
+            }),
+            credentials: "include",
+          }
+        );
+        const data = await response.json();
+        getBookMarkedBlogs();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    setIsBlogBookmarked(!isBlogBookmarked);
+  };
   return (
     <Card maxW="sm" bg={"bg"} color={"#f2f2fe"} borderWidth={1}>
+      <Box position="absolute" top={4} right={3}>
+        <Button
+          size="lg"
+          variant="ghost"
+          colorScheme="blue"
+          onClick={handleBookMarkBlog}
+          aria-label="Bookmark Blog"
+        >
+          {isBlogBookmarked ? <FaBookmark /> : <FaRegBookmark />}
+        </Button>
+      </Box>
       <CardBody>
         <Image
           src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
@@ -98,8 +160,8 @@ function Blog({ blog }) {
               <Button
                 marginLeft="0"
                 variant="solid"
-                backgroundColor={'primary'}
-                _hover={{backgroundColor:"primary-variant"}}
+                backgroundColor={"primary"}
+                _hover={{ backgroundColor: "primary-variant" }}
                 onClick={handleToggleFeaturedBlog}
               >
                 Feature

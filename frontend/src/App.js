@@ -7,6 +7,7 @@ import { UserProvider } from "./Context/ChatProvider";
 import CreateBlog from "./Pages/CreateBlog";
 import SingleBlogPage from "./Pages/SingleBlogPage";
 import EditBlog from "./components/EditBlog";
+import SavedBlog from "./Pages/SavedBlog";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/create" element={<CreateBlog />}></Route>
           <Route path="/blog/:id" element={<SingleBlogPage />}></Route>
           <Route path="/edit/:id" element={<EditBlog />}></Route>
+          <Route path="/saved" element={<SavedBlog />}></Route>
         </Routes>
       </UserProvider>
     </div>

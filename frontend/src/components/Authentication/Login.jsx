@@ -49,7 +49,7 @@ function Login() {
           boxShadow="md"
         >
           <Text fontWeight="bold" fontSize="lg">
-            Log in successfull
+            Welcome back
           </Text>
         </Box>
       ),

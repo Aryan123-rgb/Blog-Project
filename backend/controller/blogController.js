@@ -83,6 +83,7 @@ const handleGetFeaturedBlog = async(req,res) => {
       path: "author",
       select: "name email pic isAdmin",
     });
+    
     res.json(featuredBlog);
   } catch (error) {
     console.log(error);
@@ -121,7 +122,6 @@ const handleEditBlog = async (req, res) => {
     res.status(500).json({ message: "Failed to update the blog" });
   }
 };
-
 
 module.exports = {
   handleCreateBlog,
