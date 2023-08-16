@@ -6,31 +6,32 @@ BlogNest is a full-stack blogging platform that allows users to create, read, up
 
 ### Homepage
 
-![Homepage](./images/homepage.png)
-*Description: This screenshot shows the homepage of BlogNest, displaying featured blog posts and other posts.*
+
+
+https://github.com/Aryan123-rgb/BlogNest/assets/118872531/80faf72b-5c05-4522-b6ce-165f30f355f3
+
+
 
 ### Signup-Page
 
-![Login](./images/Login.png)
-*Description: This screenshot shows the login page. A new user can log in as a guest user to try all the functionality of the project.*
+![Login](https://github.com/Aryan123-rgb/BlogNest/assets/118872531/17efeb0c-a32a-4fc5-ad64-03270fdbebc0)
 
+![UpdatedHomePage](https://github.com/Aryan123-rgb/BlogNest/assets/118872531/c771d9f1-442e-44d8-b9d9-38889bc70f8e)
 
-![UpdatedHomePage](./images/UpdatedHomePage.png)
-*Description: This screenshot shows the homepage of BlogNest, displaying featured blog posts and other posts after a user signs up.*
 
 ### Blog Creation
 
-![Blog Creation](./images/CreateBlog.png)
-*Description: This screenshot shows the blog creation page, where users can create new blog posts.*
+![CreateBlog](https://github.com/Aryan123-rgb/BlogNest/assets/118872531/c3e001b1-50a3-449d-a411-f1c67d4b0769)
+
 
 ### Blog Details
 
-![Blog Details](./images/blog-details.png)
-*Description: This screenshot shows the details page of a blog, displaying the full content of the blog post.*
+![blog-details](https://github.com/Aryan123-rgb/BlogNest/assets/118872531/0c9faa4c-5e8d-46e3-938d-ed895fa9172c)
+
 
 ### Live Demo
 
-![Blog Details]("https://drive.google.com/file/d/1sXMs69GTIsBWftYFhlX_hB1sTsvfcR3Z/view?usp=drive_link")
+
 
 
 ## Features
