@@ -28,6 +28,10 @@ BlogNest is a full-stack blogging platform that allows users to create, read, up
 ![Blog Details](./images/blog-details.png)
 *Description: This screenshot shows the details page of a blog, displaying the full content of the blog post.*
 
+### Live Demo
+
+![Blog Details]("https://drive.google.com/file/d/1sXMs69GTIsBWftYFhlX_hB1sTsvfcR3Z/view?usp=drive_link")
+
 
 ## Features
 
@@ -37,7 +41,7 @@ BlogNest is a full-stack blogging platform that allows users to create, read, up
 
 - Bookmark Favorite Blogs: Users can bookmark their favorite blog posts to read them later. This feature ensures that users can easily find and read their preferred content.
 
-- Admin Privileges: Admin have the authority to manage all blog posts on the platform. This includes the ability to edit and delete any blog post.
+- Admin Privileges: Admin has the authority to manage all blog posts on the platform. This includes the ability to edit and delete any blog post.
 
 - Featured Blogs: Admin users can feature blogs, making them more prominent and accessible to a wider audience.
 
